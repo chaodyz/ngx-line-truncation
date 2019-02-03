@@ -17,10 +17,6 @@ let ellipsisCharacter = '\u2026';
  * @param options The passed in options by the user.
  */
 export function lineTruncation(rootElement, lines, lineHeight, options: LineClampOptions) {
-  // TODO: find a solution to truncate correctly while applying styles
-  // rootElement.style.cssText +=
-  //   'overflow:hidden;overflow-wrap:break-word;word-wrap:break-word;word-break:break-word;hyphens: auto;border - bottom: none';
-
   ellipsisCharacter = options.ellipsis ? options.ellipsis : ellipsisCharacter;
   const truncateHeight = lines * lineHeight;
 
