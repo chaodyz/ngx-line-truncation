@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "line-truncation-lib": [
+        "dist/line-truncation-lib"
+      ],
+      "line-truncation-lib/*": [
+        "dist/line-truncation-lib/*"
+      ]
+    }
   }
 }
