@@ -1,3 +1,5 @@
+import { LineClampOptions } from './line-truncation.model';
+
 /**
  *  Inspired by https://www.npmjs.com/package/line-clamp and https://www.npmjs.com/package/shave,
  *  adapted our own solution for better performance

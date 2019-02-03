@@ -1,5 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { lineTruncation } from './line-truncation-helper';
+import { LineClampOptions } from './line-truncation.model';
 
 /**
  * This Directive allows you to specify the number of lines that you want to truncate a text by.
