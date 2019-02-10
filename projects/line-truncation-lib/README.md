@@ -1,28 +1,38 @@
 # NG Line Truncation
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.
+Line truncating solution for Angular.
 
-## Code scaffolding
+## Perks
 
-Run `ng generate component component-name --project line-truncation-lib` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project line-truncation-lib`.
+Inspired by [line-clamp](https://www.npmjs.com/package/line-clamp), [shave](https://www.npmjs.com/package/shave)
+and made some improvement:
 
-> Note: Don't forget to add `--project line-truncation-lib` or else it will be added to the default project in your `angular.json` file.
+- Can truncate without sanitize `HTML element`
+- Retried to get `computedStyles` when it is not available in `ngAfterViewInit`
+- An Optimized truncating approach
 
-## Build
+## Installation
 
-Run `ng build line-truncation-lib` to build the project. The build artifacts will be stored in the `dist/` directory.
+`npm install angular2-shave --save`
 
-## Publishing
+## Usage
 
-After building your library with `ng build line-truncation-lib`, go to the dist folder `cd dist/line-truncation-lib` and run `npm publish`.
+```js
+import { LineTruncationLibModule } from 'ng-line-truncation;
+```
 
-## Running unit tests
+```html
+<div [ng-line-truncation]="numOfLines">
+  orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+  occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.!
+</div>
+```
 
-Run `ng test line-truncation-lib` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## License
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+The repository code is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 ## A Detail Documentation & Usage
 
