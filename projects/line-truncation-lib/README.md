@@ -13,12 +13,12 @@ and made some improvement:
 
 ## Installation
 
-`npm install angular2-shave --save`
+`npm install ng-line-truncation`
 
 ## Usage
 
 ```js
-import { LineTruncationLibModule } from 'ng-line-truncation;
+import { LineTruncationLibModule } from 'ng-line-truncation';
 ```
 
 ```html
