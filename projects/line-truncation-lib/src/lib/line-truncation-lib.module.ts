@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LineTruncationDirective } from './line-truncation.directive';
+
+import { LineTruncationDirective } from './line-truncation-directive/line-truncation.directive';
 
 @NgModule({
-  imports: [CommonModule],
   declarations: [LineTruncationDirective],
+  exports: [LineTruncationDirective],
 })
 export class LineTruncationLibModule {}

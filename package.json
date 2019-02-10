@@ -8,9 +8,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build_lib": "ng build line-truncation-lib",
-    "npm_pack": "cd dist/line-truncation-lib && npm pack",
-    "package": "npm run build_lib && npm run npm_pack"
+    "build_lib": "ng build ng-example-library",
+    "copy-license": "copy .\\LICENSE .\\dist\\ng-example-library",
+    "copy-readme": "copy .\\README.md .\\dist\\ng-example-library",
+    "copy-files": "npm run copy-license && npm run copy-readme",
+    "npm_pack": "cd dist/ng-truncation-lib && npm pack",
+    "package": "npm run build_lib && npm run copy-files && npm run npm_pack"
   },
   "private": true,
   "dependencies": {

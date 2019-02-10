@@ -16,13 +16,13 @@ import { LineClampOptions } from './line-truncation.model';
  *
  */
 @Directive({
-  selector: '[appLineTruncation]',
+  selector: '[ng-line-truncation]',
 })
 export class LineTruncationDirective implements AfterViewInit, OnInit {
   /**
    * Number of lines to display
    */
-  @Input('appLineTruncation')
+  @Input('ng-line-truncation')
   lines = 1;
 
   /**
