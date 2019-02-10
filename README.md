@@ -1,27 +1,39 @@
-# LineTruncation
+# NG Line Truncation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.0.
+Line truncating solution for Angular.
 
-## Development server
+## Perks
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Inspired by [line-clamp](https://www.npmjs.com/package/line-clamp), [shave](https://www.npmjs.com/package/shave)
+and made some improvement:
 
-## Code scaffolding
+- Can truncate without sanitize `HTML element`
+- Retried to get `computedStyles` when it is not available in `ngAfterViewInit`
+- An Optimized truncating approach
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Installation
 
-## Build
+`npm install angular2-shave --save`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Usage
 
-## Running unit tests
+```js
+import { LineTruncationLibModule } from 'ng-line-truncation;
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```html
+<div [ng-line-truncation]="numOfLines">
+  orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+  occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.!
+</div>
+```
 
-## Running end-to-end tests
+## License
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+The repository code is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
-## Further help
+## A Detail Documentation & Usage
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To be continue...
