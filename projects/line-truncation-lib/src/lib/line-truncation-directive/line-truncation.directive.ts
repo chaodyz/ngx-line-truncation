@@ -8,21 +8,21 @@ import { LineClampOptions } from './line-truncation.model';
  * @example
  * <!-- with <p> -->
  *   <p [innerHTML]="description"
- *      [appLineTruncation]="5"
+ *      [ngx-line-truncation]="5"
  *      (hasTruncated)="doSomeStuff($event)">
  *   </p>
  * !-- with div, span -->
- *  <div [upaTruncateLines]="5">your text</div>
+ *  <div [ngx-line-truncation]="5">your text</div>
  *
  */
 @Directive({
-  selector: '[ng-line-truncation]',
+  selector: '[ngx-line-truncation]',
 })
 export class LineTruncationDirective implements AfterViewInit, OnInit {
   /**
    * Number of lines to display
    */
-  @Input('ng-line-truncation')
+  @Input('ngx-line-truncation')
   lines = 1;
 
   /**
