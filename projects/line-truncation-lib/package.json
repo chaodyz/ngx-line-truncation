@@ -3,10 +3,17 @@
   "version": "0.0.5",
   "description": "This is a angular solution for text truncation by lines",
   "keywords": [
-    "Angular",
     "line truncation",
     "line clamp",
-    "shave"
+    "shave",
+    "truncate",
+    "line truncation",
+    "line clamp",
+    "shave",
+    "ellipsis",
+    "text",
+    "html",
+    "dom"
   ],
   "license": "MIT",
   "repository": {
