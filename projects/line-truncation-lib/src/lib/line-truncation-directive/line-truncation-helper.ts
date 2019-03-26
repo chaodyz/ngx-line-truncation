@@ -197,3 +197,13 @@ function getLastElementThatHasText(element) {
   }
   return element.lastChild.nodeType === NODE_TYPE_TEXT ? element : getLastElementThatHasText(element.lastChild);
 }
+
+export function getContentHeight(element: HTMLElement) {
+  const computedStyle = getComputedStyle(element);
+  if (!computedStyle.paddingTop || computedStyle.paddingBottom) {
+    return element.clientHeight;
+  }
+
+  const paddingY = parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom);
+  return element.clientHeight - paddingY;
+}

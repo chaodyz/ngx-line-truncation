@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
-import { lineTruncation } from './line-truncation-helper';
+import { lineTruncation, getContentHeight } from './line-truncation-helper';
 import { LineClampOptions } from './line-truncation.model';
 
 /**
@@ -8,21 +8,21 @@ import { LineClampOptions } from './line-truncation.model';
  * @example
  * <!-- with <p> -->
  *   <p [innerHTML]="description"
- *      [ngx-line-truncation]="5"
- *      (hasTruncated)="doSomeStuff($event)">
+ *      [line-truncation]="5"
+ *      (hasTruncated)="handler(booleanValue)">
  *   </p>
  * !-- with div, span -->
- *  <div [ngx-line-truncation]="5">your text</div>
+ *  <div [line-truncation]="5">your text</div>
  *
  */
 @Directive({
-  selector: '[ngx-line-truncation]',
+  selector: '[line-truncation]',
 })
 export class LineTruncationDirective implements AfterViewInit, OnInit {
   /**
    * Number of lines to display
    */
-  @Input('ngx-line-truncation')
+  @Input('line-truncation')
   lines = 1;
 
   /**
@@ -61,10 +61,11 @@ export class LineTruncationDirective implements AfterViewInit, OnInit {
          * Recursively call the truncate itself if Client Height is not ready
          */
         if (clientHeight > 0) {
+          const contentHeight = getContentHeight(elem);
           const lineHeight = this.getLineHeight(elem);
           const targetHeight = this.lines * lineHeight;
 
-          if (clientHeight > targetHeight) {
+          if (contentHeight > targetHeight) {
             try {
               lineTruncation(elem, this.lines, lineHeight, this.options);
             } catch (error) {
