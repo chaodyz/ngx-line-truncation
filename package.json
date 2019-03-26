@@ -1,6 +1,6 @@
 {
-  "name": "line-truncation",
-  "version": "0.0.6",
+  "name": "ngx-line-truncation",
+  "version": "0.0.7",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

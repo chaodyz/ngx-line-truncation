@@ -1,6 +1,6 @@
 {
-  "name": "line-truncation",
-  "version": "0.0.6",
+  "name": "ngx-line-truncation",
+  "version": "0.0.7",
   "description": "This is a angular solution for text truncation by lines",
   "keywords": [
     "line truncation",
