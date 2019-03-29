@@ -1,6 +1,6 @@
-# NGX [Line Truncation](https://line-truncation-demo.appspot.com/)
+# NGX Line Truncation
 
-Ngx Line Truncation is a zero dependency tool for Angular that truncate text by user defined line number.
+Ngx Line Truncation is a zero dependency tool for Angular that truncate text by user defined line number. ([demo site](https://line-truncation-demo.appspot.com/))
 
 The solution was inspired by [line-clamp](https://www.npmjs.com/package/line-clamp) and [shave](https://www.npmjs.com/package/shave), and it is fast and more capable (solves the problem that could not get Line height from getComputedStyle)
 
