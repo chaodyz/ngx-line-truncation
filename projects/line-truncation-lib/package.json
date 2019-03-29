@@ -1,7 +1,7 @@
 {
   "name": "ngx-line-truncation",
-  "version": "0.0.8",
-  "description": "This is a angular solution for text truncation by lines",
+  "version": "0.0.9",
+  "description": "Ngx Line Truncation is a zero dependency tool for Angular that truncate text by user defined line number.",
   "keywords": [
     "line truncation",
     "line clamp",
