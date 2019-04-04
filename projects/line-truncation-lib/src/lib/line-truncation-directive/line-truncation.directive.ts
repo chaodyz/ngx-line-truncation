@@ -38,6 +38,8 @@ export class LineTruncationDirective implements AfterViewInit, OnInit {
 
   options: LineClampOptions = { ellipsis: '\u2026', onFinish: val => this.onFinishHandler(val) };
 
+  flag = true;
+
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   /**
@@ -45,6 +47,20 @@ export class LineTruncationDirective implements AfterViewInit, OnInit {
    */
   ngOnInit() {
     this.renderer.setStyle(this.elem, 'visibility', 'hidden');
+
+    const mutationObserver = new MutationObserver(mutationsList => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          console.log('A child node has been added or removed.', mutation);
+        }
+      }
+      if (this.flag) {
+        this.truncateWhenNecessary(this.elem, this.MAX_TRIES);
+      }
+    });
+    mutationObserver.observe(this.elem, {
+      childList: true,
+    });
   }
 
   ngAfterViewInit() {
@@ -100,6 +116,8 @@ export class LineTruncationDirective implements AfterViewInit, OnInit {
     if (hasTruncated) {
       this.hasTruncated.emit(hasTruncated);
     }
+    this.flag = false;
+
     this.renderer.removeStyle(this.elem, 'visibility');
   }
 }
