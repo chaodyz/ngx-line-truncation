@@ -2,7 +2,7 @@
 
 Ngx Line Truncation is a zero dependency tool for Angular that truncate text by user defined line number. ([demo site](https://line-truncation-demo.appspot.com/))
 
-The solution was inspired by [line-clamp](https://www.npmjs.com/package/line-clamp) and [shave](https://www.npmjs.com/package/shave), and it is fast and more capable (solves the problem that could not get Line height from getComputedStyle)
+In addition to Line Truncation, this package has few performance optimizations not only improved usability but also reliability in Angular platform. First of all, it uses retry logic to guarantee we get Client Height text block all the time, which is an essential value of the truncation input. It also watches the dom changes,to catch the case when the text value get applied at a later time.
 
 ## Feature
 
@@ -50,7 +50,7 @@ export class MySharedModule {
 
 ## How to use
 
-Declare [line-truncation] with div, p, span, and pass a number that indicates how many lines of text you are expected to truncate
+Declare [line-truncation] with div, p, and pass a number that indicates how many lines of text you are expected to truncate
 
 ```html
 <p [line-truncation]="2">
@@ -68,7 +68,7 @@ Declare [line-truncation] with div, p, span, and pass a number that indicates ho
 </div>
 ```
 
-Optionally, an output function can help to know if the text has been truncated.
+Optionally, an output function can help to know if the text has been truncate
 
 ```html
 <p [line-truncation]="numOfLines" (hasTruncated)="handler(booleanValue)" [innerHTML]="myText"></p>
@@ -90,6 +90,12 @@ export class myComponent implements OnInit {
   handler(res: boolean){
     this.hasTruncated = res;
   }
+```
+
+an option object can be passed in to specify ellipsis character of your wish
+
+```html
+<p [line-truncation]="numOfLines" [options]="{ellipsis: "🚀"}" (hasTruncated)="handler(booleanValue)" [innerHTML]="myText"></p>
 ```
 
 ## Contact me
