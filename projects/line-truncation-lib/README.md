@@ -1,6 +1,6 @@
 # NGX Line Truncation
 
-Ngx Line Truncation is a zero dependency tool for Angular that truncate text by user defined line number. ([demo site](https://line-truncation-demo.appspot.com/))
+Ngx Line Truncation is line truncation implementation for Angular that truncate text by user defined line number. ([demo site](https://line-truncation-demo.appspot.com/))
 
 In addition to Line Truncation, this package has few performance optimizations not only improved usability but also reliability in Angular platform. First of all, it uses retry logic to guarantee we get Client Height text block all the time, which is an essential value of the truncation input. It also watches the dom changes,to catch the case when the text value get applied at a later time.
 
