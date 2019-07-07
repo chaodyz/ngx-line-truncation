@@ -7,9 +7,12 @@ import {
   OnInit,
   Output,
   Renderer2,
-  OnDestroy
+  OnDestroy,
+  HostListener,
 } from '@angular/core';
 import { getContentHeight, getLineHeight, truncate } from 'line-truncation';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 /**
  * This Directive allows you to specify the number of lines that you want to truncate a text by.
@@ -30,7 +33,7 @@ interface Options {
 }
 
 @Directive({
-  selector: '[line-truncation]'
+  selector: '[line-truncation]',
 })
 export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy {
   @Input('line-truncation')
@@ -45,10 +48,18 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
   MAX_TRIES = 10;
 
   element: HTMLElement = this.elementRef.nativeElement;
+  windowResize$ = new Subject();
+  windowListener: Subscription;
+  elementClone;
 
   observerFlag = true;
 
   mutationObserver: MutationObserver;
+
+  @HostListener('window:resize', ['$event'])
+  handleClick(event: Event) {
+    this.windowResize$.next(event);
+  }
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
   /**
@@ -56,6 +67,7 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
    */
   ngOnInit() {
     this.renderer.setStyle(this.element, 'visibility', 'hidden');
+    this.initWindowResizeListener();
 
     this.mutationObserver = new MutationObserver(() => {
       if (this.observerFlag) {
@@ -64,7 +76,7 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
     });
 
     this.mutationObserver.observe(this.element, {
-      childList: true
+      childList: true,
     });
   }
 
@@ -72,7 +84,29 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
     this.truncateWhenNecessary(this.element);
   }
 
+  initWindowResizeListener() {
+    this.windowListener = this.windowResize$.pipe(debounceTime(500)).subscribe(() => {
+      this.renderer.setStyle(this.element, 'visibility', 'hidden');
+      // grab old child nodes
+      const childNodes: Node[] = Array.from(this.elementClone.childNodes);
+      // clean element
+      while (this.element.firstChild) {
+        this.element.removeChild(this.element.firstChild);
+      }
+
+      // push child node to element shell
+      childNodes.forEach(node => {
+        this.element.appendChild(node);
+      });
+
+      this.truncateWhenNecessary(this.element);
+    });
+  }
+
   truncateWhenNecessary(element: HTMLElement, tries: number = 1, maxTries = this.MAX_TRIES) {
+    // backup original element before truncation
+    this.elementClone = element.cloneNode(true);
+
     if (tries > maxTries) {
       return;
     }
@@ -103,5 +137,6 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
 
   ngOnDestroy() {
     this.mutationObserver.disconnect();
+    this.windowListener.unsubscribe();
   }
 }
