@@ -2,16 +2,17 @@
 
 Ngx Line Truncation is line truncation implementation for Angular that truncate text by user defined line number. ([demo site](https://line-truncation-demo.appspot.com/))
 
-In addition to Line Truncation, this package has few performance optimizations not only improved usability but also reliability in Angular platform. First of all, it uses retry logic to guarantee we get Client Height text block all the time, which is an essential value of the truncation input. It also watches the dom changes,to catch the case when the text value get applied at a later time.
+In addition to Line Truncation, this package has few performance optimizations not only improved usability but also reliability in Angular platform. It uses retry logic to guarantee we get Client Height text block all the time, which is an essential value of the truncation input. It also watches the dom changes,to catch the case when the text value get applied at a later time.
 
 ## Feature
 
 - Tailor made for Angular platform
-- Smart, does not require setting Line height or max height
+- Smart, just declare how many lines you wish to truncate for, no need to provide max-height, line-height
 - Works with nest DOM element
-- Maintain original HTML element tags and styles
+- Support rich text, maintain original HTML element tags and styles
 - Lightening fast and capable
 - Custom ellipsis character
+- Re-execute on window resize
 
 ## Installation
 
@@ -61,6 +62,10 @@ Declare [line-truncation] with div, p, and pass a number that indicates how many
 ```
 
 ```html
+<p [line-truncation]="2" [innerHTML]="myText"></p>
+```
+
+```html
 <div [line-truncation]="2">
   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt consequatur ipsum unde doloremque aliquid hic vitae
   iure necessitatibus, maiores repellendus, quos dignissimos? Quis necessitatibus quos voluptas nesciunt facere mollitia
@@ -92,11 +97,15 @@ export class myComponent implements OnInit {
   }
 ```
 
-an option object can be passed in to specify ellipsis character of your wish
+By default, '...' will be added to the end of the truncated body, if you wish to use your desired ellipsis, you can pass an object like this
 
 ```html
 <p [line-truncation]="numOfLines" [options]="{ellipsis: "🚀"}" (hasTruncated)="handler(booleanValue)" [innerHTML]="myText"></p>
 ```
+
+Known issue:
+When you specify emoji as ellipsis 🚀, or use rich text( <p [innerHTML]>), the truncation result might ended up with less lines than you desired(e.g. desire 3, but only have 1).
+I will be looking into this issue in the future, current `work around` for this issue is say you realize you get 1 line instead 3, you could declare with 5, it will be truncated to 3.
 
 ## Contact me
 
