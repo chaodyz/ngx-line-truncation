@@ -104,6 +104,9 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
   }
 
   truncateWhenNecessary(element: HTMLElement, tries: number = 1, maxTries = this.MAX_TRIES) {
+    // backup original element before truncation
+    this.elementClone = element.cloneNode(true);
+
     if (tries > maxTries) {
       return;
     }
@@ -117,10 +120,6 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
         const targetHeight = this.lines * lineHeight;
 
         if (contentHeight > targetHeight) {
-          // backup original element before truncation
-          if (!this.elementClone) {
-            this.elementClone = element.cloneNode(true);
-          }
           truncate(element, this.lines, this.options.ellipsis, this.handler.bind(this));
         } else {
           this.renderer.removeStyle(this.element, 'visibility');
