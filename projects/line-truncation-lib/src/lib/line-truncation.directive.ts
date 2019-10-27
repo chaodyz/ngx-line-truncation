@@ -11,8 +11,8 @@ import {
   HostListener,
 } from '@angular/core';
 import { getContentHeight, getLineHeight, truncate } from 'line-truncation';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Subject, Subscription, BehaviorSubject } from 'rxjs';
+import { debounceTime, skip } from 'rxjs/operators';
 
 /**
  * This Directive allows you to specify the number of lines that you want to truncate a text by.
@@ -42,18 +42,21 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
   @Input()
   options: Options = { ellipsis: '\u2026' };
 
+  @Input() set disabled(val: boolean) {
+    this._disabled$.next(val);
+  }
+
   @Output()
   hasTruncated = new EventEmitter();
 
+  elementClone;
   MAX_TRIES = 10;
+  observerFlag = true;
 
+  _disabled$ = new BehaviorSubject<boolean>(false);
   element: HTMLElement = this.elementRef.nativeElement;
   windowResize$ = new Subject();
   windowListener: Subscription;
-  elementClone;
-
-  observerFlag = true;
-
   mutationObserver: MutationObserver;
 
   @HostListener('window:resize', ['$event'])
@@ -66,44 +69,37 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
    * Hide the original text content until we've finished the truncation
    */
   ngOnInit() {
-    this.renderer.setStyle(this.element, 'visibility', 'hidden');
-    this.initWindowResizeListener();
+    this._disabled$.pipe(skip(1)).subscribe(disable => {
+      // If there is elementClone, then recover
+      if (!!this.elementClone) {
+        this.putbackElement();
+      }
 
-    this.mutationObserver = new MutationObserver(() => {
-      if (this.observerFlag) {
+      if (disable) {
+        // shut down listener, observer
+        this.disconnectMutationObserver();
+        this.disconnectWindowLisener();
+      } else {
+        // re-register
+        this.truncationInit();
+        // re-execute truncation
         this.truncateWhenNecessary(this.element);
       }
     });
-
-    this.mutationObserver.observe(this.element, {
-      childList: true,
-    });
+    // first emit handling
+    if (!this._disabled$.getValue()) {
+      this.truncationInit();
+    }
   }
 
   ngAfterViewInit() {
     this.truncateWhenNecessary(this.element);
   }
 
-  initWindowResizeListener() {
-    this.windowListener = this.windowResize$.pipe(debounceTime(500)).subscribe(() => {
-      this.renderer.setStyle(this.element, 'visibility', 'hidden');
-      // grab old child nodes
-      const childNodes: Node[] = Array.from(this.elementClone.childNodes);
-      // clean element
-      while (this.element.firstChild) {
-        this.element.removeChild(this.element.firstChild);
-      }
-
-      // push child node to element shell
-      childNodes.forEach(node => {
-        this.element.appendChild(node);
-      });
-
-      this.truncateWhenNecessary(this.element);
-    });
-  }
-
   truncateWhenNecessary(element: HTMLElement, tries: number = 1, maxTries = this.MAX_TRIES) {
+    if (this._disabled$.getValue()) {
+      return;
+    }
     // backup original element before truncation
     this.elementClone = element.cloneNode(true);
 
@@ -122,6 +118,7 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
         if (contentHeight > targetHeight) {
           truncate(element, this.lines, this.options.ellipsis, this.handler.bind(this));
         } else {
+          // when there is no need, simply show the element and emit false
           this.renderer.removeStyle(this.element, 'visibility');
           this.hasTruncated.emit(false);
         }
@@ -132,12 +129,65 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
   handler(e: boolean) {
     this.hasTruncated.emit(e);
     this.observerFlag = false;
-    this.mutationObserver.disconnect();
+    this.disconnectMutationObserver();
     this.renderer.removeStyle(this.element, 'visibility');
   }
 
+  truncationInit() {
+    this.renderer.setStyle(this.element, 'visibility', 'hidden');
+    this.initWindowResizeListener(this.element);
+    this.initMutationObserver(this.element);
+  }
+
+  putbackElement() {
+    // grab old child nodes
+    const childNodes: Node[] = Array.from(this.elementClone.childNodes);
+    // clean element
+    while (this.element.firstChild) {
+      this.element.removeChild(this.element.firstChild);
+    }
+
+    // push child node to element shell
+    childNodes.forEach(node => {
+      this.element.appendChild(node);
+    });
+
+    this.elementClone = null;
+  }
+
+  initWindowResizeListener(element) {
+    this.windowListener = this.windowResize$.pipe(debounceTime(500)).subscribe(() => {
+      this.renderer.setStyle(element, 'visibility', 'hidden');
+      this.putbackElement();
+      this.truncateWhenNecessary(element);
+    });
+  }
+
+  initMutationObserver(element) {
+    this.mutationObserver = new MutationObserver(() => {
+      if (this.observerFlag) {
+        this.truncateWhenNecessary(element);
+      }
+    });
+
+    this.mutationObserver.observe(element, {
+      childList: true,
+    });
+  }
+
+  disconnectMutationObserver() {
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+    }
+  }
+  disconnectWindowLisener() {
+    if (this.windowListener) {
+      this.windowListener.unsubscribe();
+    }
+  }
+
   ngOnDestroy() {
-    this.mutationObserver.disconnect();
-    this.windowListener.unsubscribe();
+    this.disconnectMutationObserver();
+    this.disconnectWindowLisener();
   }
 }
