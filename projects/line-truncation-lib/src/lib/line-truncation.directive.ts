@@ -123,6 +123,7 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
           truncate(element, this.lines, this.options.ellipsis, this.handler.bind(this));
         } else {
           this.renderer.removeStyle(this.element, 'visibility');
+          this.hasTruncated.emit(false);
         }
       }
     }, 100);
