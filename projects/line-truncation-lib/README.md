@@ -76,7 +76,7 @@ Declare [line-truncation] with div, p, and pass a number that indicates how many
 Optionally, an output function can help to know if the text has been truncate
 
 ```html
-<p [line-truncation]="numOfLines" (hasTruncated)="handler(booleanValue)" [innerHTML]="myText"></p>
+<p [line-truncation]="numOfLines" (hasTruncated)="handler($event)" [innerHTML]="myText"></p>
 ```
 
 in your component.ts file
@@ -100,12 +100,17 @@ export class myComponent implements OnInit {
 By default, '...' will be added to the end of the truncated body, if you wish to use your desired ellipsis, you can pass an object like this
 
 ```html
-<p [line-truncation]="numOfLines" [options]="{ellipsis: "🚀"}" (hasTruncated)="handler(booleanValue)" [innerHTML]="myText"></p>
+<p [line-truncation]="numOfLines" [options]="{ellipsis: "🚀"}" (hasTruncated)="handler(booleanValue)" [innerHTML]="myText" [disabled]="disabled"></p>
 ```
 
 Known issue:
 When you specify emoji as ellipsis 🚀, or use rich text( <p [innerHTML]>), the truncation result might ended up with less lines than you desired(e.g. desire 3, but only have 1).
 I will be looking into this issue in the future, current `work around` for this issue is say you realize you get 1 line instead 3, you could declare with 5, it will be truncated to 3.
+
+## Update
+
+10-27 add input disabled
+fix an issue when not truncating, hasTruncated is not emitting value
 
 ## Contact me
 
