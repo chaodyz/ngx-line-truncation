@@ -13,6 +13,7 @@ In addition to Line Truncation, this package has few performance optimizations n
 - Lightening fast and capable
 - Custom ellipsis character
 - Re-execute on window resize
+- Dynamic content truncation
 
 ## Installation
 
@@ -106,6 +107,25 @@ By default, '...' will be added to the end of the truncated body, if you wish to
 Known issue:
 When you specify emoji as ellipsis 🚀, or use rich text( <p [innerHTML]>), the truncation result might ended up with less lines than you desired(e.g. desire 3, but only have 1).
 I will be looking into this issue in the future, current `work around` for this issue is say you realize you get 1 line instead 3, you could declare with 5, it will be truncated to 3.
+
+
+## List of Input & Output
+
+  @Input("line-truncation")
+  lines = 1;                                          -- Lines that you desire
+
+  @Input()
+  options: Options = { ellipsis: "\u2026" };          -- Ellipsis Character
+
+  @Input() set disabled(val: boolean) {
+    this._disabled$.next(val);                        -- To disable the truncation
+  }
+
+  @Input()
+  watchChanges = true;                                -- To watch the text change and truncate
+
+  @Output()
+  hasTruncated = new EventEmitter();                  -- $event to true if truncation happen (every time)
 
 ## Update
 12-02 add input watchChanges to provide truncation on dynamic text content
