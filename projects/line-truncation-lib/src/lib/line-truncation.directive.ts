@@ -8,11 +8,11 @@ import {
   Output,
   Renderer2,
   OnDestroy,
-  HostListener,
-} from '@angular/core';
-import { getContentHeight, getLineHeight, truncate } from 'line-truncation';
-import { Subject, Subscription, BehaviorSubject } from 'rxjs';
-import { debounceTime, skip } from 'rxjs/operators';
+  HostListener
+} from "@angular/core";
+import { getContentHeight, getLineHeight, truncate } from "line-truncation";
+import { Subject, Subscription, BehaviorSubject } from "rxjs";
+import { debounceTime, skip } from "rxjs/operators";
 
 /**
  * This Directive allows you to specify the number of lines that you want to truncate a text by.
@@ -33,14 +33,15 @@ interface Options {
 }
 
 @Directive({
-  selector: '[line-truncation]',
+  selector: "[line-truncation]"
 })
-export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy {
-  @Input('line-truncation')
+export class LineTruncationDirective
+  implements AfterViewInit, OnInit, OnDestroy {
+  @Input("line-truncation")
   lines = 1;
 
   @Input()
-  options: Options = { ellipsis: '\u2026' };
+  options: Options = { ellipsis: "\u2026" };
 
   @Input() set disabled(val: boolean) {
     this._disabled$.next(val);
@@ -59,7 +60,7 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
   windowListener: Subscription;
   mutationObserver: MutationObserver;
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   handleClick(event: Event) {
     this.windowResize$.next(event);
   }
@@ -96,7 +97,11 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
     this.truncateWhenNecessary(this.element);
   }
 
-  truncateWhenNecessary(element: HTMLElement, tries: number = 1, maxTries = this.MAX_TRIES) {
+  truncateWhenNecessary(
+    element: HTMLElement,
+    tries: number = 1,
+    maxTries = this.MAX_TRIES
+  ) {
     if (this._disabled$.getValue()) {
       return;
     }
@@ -116,10 +121,15 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
         const targetHeight = this.lines * lineHeight;
 
         if (contentHeight > targetHeight) {
-          truncate(element, this.lines, this.options.ellipsis, this.handler.bind(this));
+          truncate(
+            element,
+            this.lines,
+            this.options.ellipsis,
+            this.handler.bind(this)
+          );
         } else {
           // when there is no need, simply show the element and emit false
-          this.renderer.removeStyle(this.element, 'visibility');
+          this.renderer.removeStyle(this.element, "visibility");
           this.hasTruncated.emit(false);
         }
       }
@@ -130,11 +140,11 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
     this.hasTruncated.emit(e);
     this.observerFlag = false;
     this.disconnectMutationObserver();
-    this.renderer.removeStyle(this.element, 'visibility');
+    this.renderer.removeStyle(this.element, "visibility");
   }
 
   truncationInit() {
-    this.renderer.setStyle(this.element, 'visibility', 'hidden');
+    this.renderer.setStyle(this.element, "visibility", "hidden");
     this.initWindowResizeListener(this.element);
     this.initMutationObserver(this.element);
   }
@@ -156,11 +166,13 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
   }
 
   initWindowResizeListener(element) {
-    this.windowListener = this.windowResize$.pipe(debounceTime(500)).subscribe(() => {
-      this.renderer.setStyle(element, 'visibility', 'hidden');
-      this.putbackElement();
-      this.truncateWhenNecessary(element);
-    });
+    this.windowListener = this.windowResize$
+      .pipe(debounceTime(500))
+      .subscribe(() => {
+        this.renderer.setStyle(element, "visibility", "hidden");
+        this.putbackElement();
+        this.truncateWhenNecessary(element);
+      });
   }
 
   initMutationObserver(element) {
@@ -171,7 +183,7 @@ export class LineTruncationDirective implements AfterViewInit, OnInit, OnDestroy
     });
 
     this.mutationObserver.observe(element, {
-      childList: true,
+      childList: true
     });
   }
 
