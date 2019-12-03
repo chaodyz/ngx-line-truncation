@@ -112,17 +112,17 @@ I will be looking into this issue in the future, current `work around` for this 
 ## List of Input & Output
 
   @Input("line-truncation")
-  lines = 1;                                          -- Lines that you desire
+  lines = 1;                                          -- Lines that you desire, default to 1
 
   @Input()
-  options: Options = { ellipsis: "\u2026" };          -- Ellipsis Character
+  options: Options = { ellipsis: "\u2026" };          -- Ellipsis Character, default to ...
 
   @Input() set disabled(val: boolean) {
-    this._disabled$.next(val);                        -- To disable the truncation
+    this._disabled$.next(val);                        -- To disable the truncation, default to false
   }
 
   @Input()
-  watchChanges = true;                                -- To watch the text change and truncate
+  watchChanges = false;                               -- To watch the text change and truncate, default to false
 
   @Output()
   hasTruncated = new EventEmitter();                  -- $event to true if truncation happen (every time)

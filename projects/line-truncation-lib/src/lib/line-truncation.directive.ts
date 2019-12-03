@@ -48,7 +48,7 @@ export class LineTruncationDirective
   }
 
   @Input()
-  watchChanges = true;
+  watchChanges = false;
 
   @Output()
   hasTruncated = new EventEmitter();
