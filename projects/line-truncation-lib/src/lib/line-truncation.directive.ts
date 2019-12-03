@@ -47,6 +47,9 @@ export class LineTruncationDirective
     this._disabled$.next(val);
   }
 
+  @Input()
+  watchChanges = true;
+
   @Output()
   hasTruncated = new EventEmitter();
 
@@ -138,8 +141,11 @@ export class LineTruncationDirective
 
   handler(e: boolean) {
     this.hasTruncated.emit(e);
-    this.observerFlag = false;
-    this.disconnectMutationObserver();
+
+    if (!this.watchChanges) {
+      this.observerFlag = false;
+      this.disconnectMutationObserver();
+    }
     this.renderer.removeStyle(this.element, "visibility");
   }
 
