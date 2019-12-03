@@ -108,9 +108,10 @@ When you specify emoji as ellipsis 🚀, or use rich text( <p [innerHTML]>), the
 I will be looking into this issue in the future, current `work around` for this issue is say you realize you get 1 line instead 3, you could declare with 5, it will be truncated to 3.
 
 ## Update
+12-02 add input watchChanges to provide truncation on dynamic text content
 
 10-27 add input disabled
-fix an issue when not truncating, hasTruncated is not emitting value
+      fix an issue when not truncating, hasTruncated is not emitting value
 
 ## Contact me
 

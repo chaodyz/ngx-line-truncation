@@ -25,6 +25,6 @@
     "@angular/core": "^8.0.1"
   },
   "dependencies": {
-    "line-truncation": "^1.2.5"
+    "line-truncation": "^1.4.6"
   }
 }
