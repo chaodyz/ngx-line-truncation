@@ -51,15 +51,15 @@ export class LineTruncationDirective
   watchChanges = false;
 
   @Output()
-  hasTruncated = new EventEmitter();
+  hasTruncated = new EventEmitter<boolean>();
 
-  elementClone;
+  elementClone: Node;
   MAX_TRIES = 10;
   observerFlag = true;
 
   _disabled$ = new BehaviorSubject<boolean>(false);
-  element: HTMLElement = this.elementRef.nativeElement;
-  windowResize$ = new Subject();
+  element = this.elementRef.nativeElement;
+  windowResize$ = new Subject<Event>();
   windowListener: Subscription;
   mutationObserver: MutationObserver;
 
@@ -68,7 +68,7 @@ export class LineTruncationDirective
     this.windowResize$.next(event);
   }
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+  constructor(private elementRef: ElementRef<HTMLElement>, private renderer: Renderer2) {}
   /**
    * Hide the original text content until we've finished the truncation
    */
@@ -131,9 +131,8 @@ export class LineTruncationDirective
             this.handler.bind(this)
           );
         } else {
-          // when there is no need, simply show the element and emit false
-          this.renderer.removeStyle(this.element, "visibility");
-          this.hasTruncated.emit(false);
+          // when there is no need, simply show the element, emit false and unsubscribe from MutationObserver if `watchChanges` prop was falsy
+          this.handler(false);
         }
       }
     }, 100);
@@ -171,7 +170,7 @@ export class LineTruncationDirective
     this.elementClone = null;
   }
 
-  initWindowResizeListener(element) {
+  initWindowResizeListener(element: HTMLElement) {
     this.windowListener = this.windowResize$
       .pipe(debounceTime(500))
       .subscribe(() => {
@@ -181,7 +180,7 @@ export class LineTruncationDirective
       });
   }
 
-  initMutationObserver(element) {
+  initMutationObserver(element: HTMLElement) {
     this.mutationObserver = new MutationObserver(() => {
       if (this.observerFlag) {
         this.truncateWhenNecessary(element);
@@ -198,6 +197,7 @@ export class LineTruncationDirective
       this.mutationObserver.disconnect();
     }
   }
+
   disconnectWindowLisener() {
     if (this.windowListener) {
       this.windowListener.unsubscribe();
