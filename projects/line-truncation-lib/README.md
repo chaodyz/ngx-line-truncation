@@ -56,9 +56,10 @@ Declare [line-truncation] with div, p, and pass a number that indicates how many
 
 ```html
 <p [line-truncation]="2">
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt consequatur ipsum unde doloremque aliquid hic vitae
-  iure necessitatibus, maiores repellendus, quos dignissimos Quis necessitatibus quos voluptas nesciunt facere mollitia
-  cupiditate.
+  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt consequatur
+  ipsum unde doloremque aliquid hic vitae iure necessitatibus, maiores
+  repellendus, quos dignissimos Quis necessitatibus quos voluptas nesciunt
+  facere mollitia cupiditate.
 </p>
 ```
 
@@ -68,16 +69,21 @@ Declare [line-truncation] with div, p, and pass a number that indicates how many
 
 ```html
 <div [line-truncation]="2">
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt consequatur ipsum unde doloremque aliquid hic vitae
-  iure necessitatibus, maiores repellendus, quos dignissimos? Quis necessitatibus quos voluptas nesciunt facere mollitia
-  cupiditate.
+  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt consequatur
+  ipsum unde doloremque aliquid hic vitae iure necessitatibus, maiores
+  repellendus, quos dignissimos? Quis necessitatibus quos voluptas nesciunt
+  facere mollitia cupiditate.
 </div>
 ```
 
 Optionally, an output function can help to know if the text has been truncate
 
 ```html
-<p [line-truncation]="numOfLines" (hasTruncated)="handler($event)" [innerHTML]="myText"></p>
+<p
+  [line-truncation]="numOfLines"
+  (hasTruncated)="handler($event)"
+  [innerHTML]="myText"
+></p>
 ```
 
 in your component.ts file
@@ -105,33 +111,40 @@ By default, '...' will be added to the end of the truncated body, if you wish to
 ```
 
 Known issue:
-When you specify emoji as ellipsis 🚀, or use rich text( <p [innerHTML]>), the truncation result might ended up with less lines than you desired(e.g. desire 3, but only have 1).
-I will be looking into this issue in the future, current `work around` for this issue is say you realize you get 1 line instead 3, you could declare with 5, it will be truncated to 3.
 
+- When you specify emoji as ellipsis 🚀, or use rich text( <p [innerHTML]>), the truncation result might ended up with less lines than you desired(e.g. desire 3, but only have 1).
+  I will be looking into this issue in the future, current `work around` for this issue is say you realize you get 1 line instead 3, you could declare with 5, it will be truncated to 3.
 
 ## List of Input & Output
 
-  @Input("line-truncation")
-  lines = 1;                                          -- Lines that you desire, default to 1
+@Input("line-truncation")
+lines = 1; -- Lines that you desire, default to 1
 
-  @Input()
-  options: Options = { ellipsis: "\u2026" };          -- Ellipsis Character, default to ...
+@Input()
+options: Options = { ellipsis: "\u2026" }; -- Ellipsis Character, default to ...
 
-  @Input() set disabled(val: boolean) {
-    this._disabled$.next(val);                        -- To disable the truncation, default to false
-  }
+@Input() set disabled(val: boolean) {
+this.\_disabled\$.next(val); -- To disable the truncation, default to false
+}
 
-  @Input()
-  watchChanges = false;                               -- To watch the text change and truncate, default to false
+@Input()
+watchChanges = false; -- To watch the text change and truncate, default to false
 
-  @Output()
-  hasTruncated = new EventEmitter();                  -- $event to true if truncation happen (every time)
+@Output()
+hasTruncated = new EventEmitter(); -- \$event to true if truncation happen (every time)
 
 ## Update
+
+### 2020
+
+04-19 update dependency to Angular 9
+
+### 2019
+
 12-02 add input watchChanges to provide truncation on dynamic text content
 
 10-27 add input disabled
-      fix an issue when not truncating, hasTruncated is not emitting value
+fix an issue when not truncating, hasTruncated is not emitting value
 
 ## Contact me
 

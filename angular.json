@@ -14,6 +14,11 @@
           "options": {
             "tsConfig": "projects/line-truncation-lib/tsconfig.lib.json",
             "project": "projects/line-truncation-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/line-truncation-lib/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -31,7 +36,9 @@
               "projects/line-truncation-lib/tsconfig.lib.json",
               "projects/line-truncation-lib/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -46,13 +53,19 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/line-truncation-tester",
             "index": "projects/line-truncation-tester/src/index.html",
             "main": "projects/line-truncation-tester/src/main.ts",
             "polyfills": "projects/line-truncation-tester/src/polyfills.ts",
             "tsConfig": "projects/line-truncation-tester/tsconfig.app.json",
-            "assets": ["projects/line-truncation-tester/src/favicon.ico", "projects/line-truncation-tester/src/assets"],
-            "styles": ["projects/line-truncation-tester/src/styles.css"],
+            "assets": [
+              "projects/line-truncation-tester/src/favicon.ico",
+              "projects/line-truncation-tester/src/assets"
+            ],
+            "styles": [
+              "projects/line-truncation-tester/src/styles.css"
+            ],
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -78,6 +91,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -107,9 +124,14 @@
             "polyfills": "projects/line-truncation-tester/src/polyfills.ts",
             "tsConfig": "projects/line-truncation-tester/tsconfig.spec.json",
             "karmaConfig": "projects/line-truncation-tester/karma.conf.js",
-            "styles": ["projects/line-truncation-tester/src/styles.css"],
+            "styles": [
+              "projects/line-truncation-tester/src/styles.css"
+            ],
             "scripts": [],
-            "assets": ["projects/line-truncation-tester/src/favicon.ico", "projects/line-truncation-tester/src/assets"]
+            "assets": [
+              "projects/line-truncation-tester/src/favicon.ico",
+              "projects/line-truncation-tester/src/assets"
+            ]
           }
         },
         "lint": {
@@ -119,7 +141,9 @@
               "projects/line-truncation-tester/tsconfig.app.json",
               "projects/line-truncation-tester/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -145,11 +169,16 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "projects/line-truncation-tester-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
     }
   },
-  "defaultProject": "line-truncation-lib"
+  "defaultProject": "line-truncation-lib",
+  "cli": {
+    "analytics": false
+  }
 }
