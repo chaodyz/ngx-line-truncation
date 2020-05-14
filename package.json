@@ -1,6 +1,6 @@
 {
   "name": "ngx-line-truncation",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -24,7 +24,7 @@
     "@angular/router": "~9.1.7",
     "core-js": "^3.1.4",
     "line-truncation": "^1.2.5",
-    "rxjs": "~6.5.4",
+    "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
