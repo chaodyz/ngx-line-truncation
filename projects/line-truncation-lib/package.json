@@ -26,5 +26,6 @@
   },
   "dependencies": {
     "line-truncation": "^1.3.9"
-  }
+  ,    "tslib": "^2.0.0"
+}
 }
