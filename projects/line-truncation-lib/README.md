@@ -1,3 +1,4 @@
+![Logo](../logo.png)
 # NGX Line Truncation
 
 Ngx Line Truncation is line truncation implementation for Angular that truncate text by user defined line number. ([demo](https://stackblitz.com/github/DiZhou92/ngx-line-truncation-demo))
