@@ -3,15 +3,15 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   Renderer2,
-  OnDestroy,
-  HostListener
 } from "@angular/core";
 import { getContentHeight, getLineHeight, truncate } from "line-truncation";
-import { Subject, Subscription, BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subject, Subscription } from "rxjs";
 import { debounceTime, skip } from "rxjs/operators";
 
 /**
@@ -33,7 +33,7 @@ interface Options {
 }
 
 @Directive({
-  selector: "[line-truncation]"
+  selector: "[line-truncation]",
 })
 export class LineTruncationDirective
   implements AfterViewInit, OnInit, OnDestroy {
@@ -68,12 +68,15 @@ export class LineTruncationDirective
     this.windowResize$.next(event);
   }
 
-  constructor(private elementRef: ElementRef<HTMLElement>, private renderer: Renderer2) {}
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+    private renderer: Renderer2
+  ) {}
   /**
    * Hide the original text content until we've finished the truncation
    */
   ngOnInit() {
-    this._disabled$.pipe(skip(1)).subscribe(disable => {
+    this._disabled$.pipe(skip(1)).subscribe((disable) => {
       // If there is elementClone, then recover
       if (!!this.elementClone) {
         this.putbackElement();
@@ -124,12 +127,16 @@ export class LineTruncationDirective
         const targetHeight = this.lines * lineHeight;
 
         if (contentHeight > targetHeight) {
-          truncate(
-            element,
-            this.lines,
-            this.options.ellipsis,
-            this.handler.bind(this)
-          );
+          try {
+            truncate(
+              element,
+              this.lines,
+              this.options.ellipsis,
+              this.handler.bind(this)
+            );
+          } catch (e) {
+            this.handler(true);
+          }
         } else {
           // when there is no need, simply show the element, emit false and unsubscribe from MutationObserver if `watchChanges` prop was falsy
           this.handler(false);
@@ -163,7 +170,7 @@ export class LineTruncationDirective
     }
 
     // push child node to element shell
-    childNodes.forEach(node => {
+    childNodes.forEach((node) => {
       this.element.appendChild(node);
     });
 
@@ -188,7 +195,7 @@ export class LineTruncationDirective
     });
 
     this.mutationObserver.observe(element, {
-      childList: true
+      childList: true,
     });
   }
 
