@@ -124,12 +124,16 @@ export class LineTruncationDirective
         const targetHeight = this.lines * lineHeight;
 
         if (contentHeight > targetHeight) {
-          truncate(
-            element,
-            this.lines,
-            this.options.ellipsis,
-            this.handler.bind(this)
-          );
+          try {
+            truncate(
+              element,
+              this.lines,
+              this.options.ellipsis,
+              this.handler.bind(this)
+            );
+          } catch (e) {
+            this.handler(true);
+          }
         } else {
           // when there is no need, simply show the element, emit false and unsubscribe from MutationObserver if `watchChanges` prop was falsy
           this.handler(false);
