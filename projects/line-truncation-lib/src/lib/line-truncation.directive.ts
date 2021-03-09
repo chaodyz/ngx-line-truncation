@@ -3,15 +3,21 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
-  Input,
-  OnInit,
+
+
+
+
+
+  HostListener, Input,
+
+
+
+  OnDestroy, OnInit,
   Output,
-  Renderer2,
-  OnDestroy,
-  HostListener
+  Renderer2
 } from "@angular/core";
 import { getContentHeight, getLineHeight, truncate } from "line-truncation";
-import { Subject, Subscription, BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subject, Subscription } from "rxjs";
 import { debounceTime, skip } from "rxjs/operators";
 
 /**
@@ -211,6 +217,7 @@ export class LineTruncationDirective
   }
 
   ngOnDestroy() {
+    this._disabled$.complete();
     this.disconnectMutationObserver();
     this.disconnectWindowLisener();
   }
