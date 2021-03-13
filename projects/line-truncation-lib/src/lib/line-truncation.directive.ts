@@ -62,6 +62,7 @@ export class LineTruncationDirective
   windowResize$ = new Subject<Event>();
   windowListener: Subscription;
   mutationObserver: MutationObserver;
+  isTruncated: boolean;
 
   @HostListener("window:resize", ["$event"])
   handleClick(event: Event) {
@@ -143,7 +144,8 @@ export class LineTruncationDirective
   }
 
   handler(e: boolean) {
-    this.hasTruncated.emit(e);
+    this.isTruncated = e;
+    this.hasTruncated.emit(this.isTruncated);
 
     if (!this.watchChanges) {
       this.observerFlag = false;
