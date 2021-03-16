@@ -211,6 +211,7 @@ export class LineTruncationDirective
   }
 
   ngOnDestroy() {
+    this._disabled$.complete();
     this.disconnectMutationObserver();
     this.disconnectWindowLisener();
   }
