@@ -139,21 +139,23 @@ hasTruncated = new EventEmitter(); -- \$event to true if truncation happen (ever
 
 ### 2021
 
-03-13 [Complete subject on ngOnDestroy](https://github.com/DiZhou92/ngx-line-truncation/commit/c345f12ad6107708a77c0849855f42d69051f5bb)
-03-13 [Save truncation status in public field](https://github.com/DiZhou92/ngx-line-truncation/commit/7e965def38104e7daa9b31dbc9c26c5b1d4e8b7e)
+- 06-03 update peer dependency to Angular 12
+
+- 03-13 [Complete subject on ngOnDestroy](https://github.com/DiZhou92/ngx-line-truncation/commit/c345f12ad6107708a77c0849855f42d69051f5bb)
+- 03-13 [Save truncation status in public field](https://github.com/DiZhou92/ngx-line-truncation/commit/7e965def38104e7daa9b31dbc9c26c5b1d4e8b7e)
 
 ### 2020
 
-12-03 [catch truncate errors like "Must have child node"](https://github.com/DiZhou92/ngx-line-truncation/commit/3cadff656282bd6599f0a6fd48b52e093b153894)
-07-29 update dependency to Angular 10
-04-19 update dependency to Angular 9
+- 12-03 [catch truncate errors like "Must have child node"](https://github.com/DiZhou92/ngx-line-truncation/commit/3cadff656282bd6599f0a6fd48b52e093b153894)
+  07-29 update dependency to Angular 10
+  04-19 update dependency to Angular 9
 
 ### 2019
 
-12-02 add input watchChanges to provide truncation on dynamic text content
+- 12-02 add input watchChanges to provide truncation on dynamic text content
 
-10-27 add input disabled
-fix an issue when not truncating, hasTruncated is not emitting value
+- 10-27 add input disabled
+  fix an issue when not truncating, hasTruncated is not emitting value
 
 ## Contact me
 
