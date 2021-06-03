@@ -21,8 +21,8 @@
     "url": "https://github.com/DiZhou92/ngx-line-truncation"
   },
   "peerDependencies": {
-    "@angular/common": "^10.0.1",
-    "@angular/core": "^10.0.1"
+    "@angular/common": "^12.0.0",
+    "@angular/core": "^12.0.0"
   },
   "dependencies": {
     "line-truncation": "^1.3.9",
