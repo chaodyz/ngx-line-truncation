@@ -1,3 +1,5 @@
+![Logo](logo.png)
+
 # NGX Line Truncation
 
 Ngx Line Truncation is line truncation implementation for Angular that truncate text by user defined line number. ([demo](https://stackblitz.com/github/DiZhou92/ngx-line-truncation-demo))
@@ -134,6 +136,9 @@ watchChanges = false; -- To watch the text change and truncate, default to false
 hasTruncated = new EventEmitter(); -- \$event to true if truncation happen (every time)
 
 ## Update
+
+### 2022
+- 05-25 For lib version v1.8.0 now support peer dependency Angular ~13
 
 ### 2021
 
