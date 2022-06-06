@@ -142,7 +142,6 @@
       }
     }
   },
-  "defaultProject": "line-truncation-lib",
   "cli": {
     "analytics": false
   }
